@@ -93,7 +93,14 @@ if fetch_clicked:
                 lines.append(f'video {i} :- "{t}"{f" ({d})" if d else ""}')
             output_text = "\n".join(lines)
             st.subheader("Copy or Download")
-            st.code(output_text, language=None)
+            st.text_area(
+                "Copy or Download",
+                value=output_text,
+                height=420,
+                key="copy_download_text",
+                label_visibility="collapsed",
+            )
+            st.caption("Tip: Click inside the box and press Ctrl+A to select only this text.")
             st.download_button(
                 label="Download as text",
                 data=output_text,
