@@ -1,55 +1,23 @@
 import streamlit as st
-from pytube import Playlist, YouTube
 from typing import List
 
 try:
     import yt_dlp
 except Exception:
-    yt_dlp = None  # Optional fallback; handled at runtime
+    yt_dlp = None  # Provided by Poetry dependency; handled at runtime
 
 
 def fetch_video_titles(playlist_url: str) -> list[str]:
     titles: List[str] = []
-    try:
-        playlist = Playlist(playlist_url)
-    except Exception as exc:
-        st.error(f"Failed to load playlist: {exc}")
-        return titles
 
-    # Try playlist.videos first, fallback to video_urls if needed
-    video_objects = []
-    try:
-        video_objects = list(playlist.videos)
-    except Exception:
-        video_objects = []
-
-    if not video_objects:
-        try:
-            for url in getattr(playlist, "video_urls", []):
-                try:
-                    video_objects.append(YouTube(url))
-                except Exception:
-                    continue
-        except Exception:
-            pass
-
-    for video in video_objects:
-        try:
-            titles.append(video.title)
-        except Exception:
-            titles.append("Unavailable video")
-
-    if titles:
-        return titles
-
-    # Fallback: use yt-dlp to extract playlist entries
     if yt_dlp is None:
+        st.error("yt-dlp is not installed. Please run 'poetry install' to install dependencies.")
         return titles
 
     ydl_opts = {
         "quiet": True,
         "skip_download": True,
-        "extract_flat": True,  # Faster, metadata only
+        "extract_flat": True,
         "noplaylist": False,
     }
 
@@ -61,9 +29,8 @@ def fetch_video_titles(playlist_url: str) -> list[str]:
                 title = entry.get("title") if isinstance(entry, dict) else None
                 if title:
                     titles.append(title)
-    except Exception:
-        # If yt-dlp also fails, return whatever we have
-        pass
+    except Exception as exc:
+        st.error(f"Failed to fetch titles: {exc}")
 
     return titles
 
@@ -91,7 +58,20 @@ if fetch_clicked:
             st.info("No videos found or unable to fetch titles.")
         else:
             st.success(f"Found {len(titles)} videos.")
+            # Display as list
             for idx, title in enumerate(titles, start=1):
                 st.write(f'video {idx} :- "{title}"')
+
+            # Copy/Download utilities
+            output_text = "\n".join([f'video {i} :- "{t}"' for i, t in enumerate(titles, start=1)])
+            st.divider()
+            st.subheader("Copy or Download")
+            st.code(output_text, language=None)
+            st.download_button(
+                label="Download as text",
+                data=output_text,
+                file_name="playlist_titles.txt",
+                mime="text/plain",
+            )
 
 
