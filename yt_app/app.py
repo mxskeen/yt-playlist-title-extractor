@@ -41,8 +41,11 @@ def fetch_video_entries(playlist_url: str, include_duration: bool) -> List[Dict[
                 if not isinstance(entry, dict):
                     continue
                 title = entry.get("title")
-                dur_seconds = entry.get("duration") if include_duration else entry.get("duration")
-                duration_str = _format_duration(dur_seconds) if isinstance(dur_seconds, int) else ""
+                if include_duration:
+                    dur_seconds = entry.get("duration")
+                    duration_str = _format_duration(dur_seconds) if isinstance(dur_seconds, int) else ""
+                else:
+                    duration_str = ""
                 if title:
                     entries_out.append({"title": title, "duration": duration_str})
     except Exception as exc:
