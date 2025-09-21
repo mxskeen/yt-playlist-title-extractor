@@ -39,14 +39,23 @@ st.set_page_config(page_title="YT Playlist Titles", page_icon="🎬", layout="ce
 st.title("YouTube Playlist Video Titles Extractor")
 st.caption("Enter a YouTube playlist URL to list all video titles.")
 
-playlist_url = st.text_input("Enter YouTube Playlist URL", placeholder="https://www.youtube.com/playlist?list=...")
+if "playlist_url" not in st.session_state:
+    st.session_state["playlist_url"] = ""
+
+playlist_url = st.text_input(
+    "Enter YouTube Playlist URL",
+    value=st.session_state.get("playlist_url", ""),
+    placeholder="https://www.youtube.com/playlist?list=...",
+    key="playlist_url",
+)
 
 col1, col2 = st.columns([1, 1])
 fetch_clicked = col1.button("Fetch Video Titles", type="primary")
 clear_clicked = col2.button("Clear")
 
 if clear_clicked:
-    st.session_state.clear()
+    st.session_state["playlist_url"] = ""
+    st.rerun()
 
 if fetch_clicked:
     if not playlist_url:
