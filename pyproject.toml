@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "yt-script"
+version = "0.1.0"
+description = "Streamlit app to extract YouTube playlist video titles"
+authors = ["maskeen <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<3.13"
+streamlit = ">=1.22.0"
+yt-dlp = ">=2024.04.09"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
+
+
