@@ -1,6 +1,6 @@
 # YouTube Playlist Titles (Streamlit + Poetry)
 
-Extract and display video titles from a YouTube playlist using Streamlit, managed with Poetry.
+Extract and display video titles from a YouTube playlist using Streamlit, managed with Poetry. Implementation uses `yt-dlp` only (no pytube).
 
 ## Requirements
 - Python >=3.9 (excluding 3.9.7), <3.13
@@ -16,9 +16,8 @@ poetry install
 poetry run streamlit run yt_app/app.py
 ```
 
-Paste a YouTube playlist URL and click "Fetch Video Titles".
+Paste a YouTube playlist URL and click "Fetch Video Titles". Use the "Copy or Download" section to copy all titles at once or download a `.txt` file.
 
 ## Notes
 - Large playlists may take time due to rate limiting.
-- Unreachable titles are shown as "Unavailable video".
- - If `pytube` fails to fetch titles, the app falls back to `yt-dlp` metadata extraction.
+- Titles are fetched via `yt-dlp` metadata extraction.
