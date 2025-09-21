@@ -764,17 +764,6 @@ files = [
 six = ">=1.5"
 
 [[package]]
-name = "pytube"
-version = "15.0.0"
-description = "Python 3 library for downloading YouTube Videos."
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "pytube-15.0.0-py3-none-any.whl", hash = "sha256:07b9904749e213485780d7eb606e5e5b8e4341aa4dccf699160876da00e12d78"},
-    {file = "pytube-15.0.0.tar.gz", hash = "sha256:076052efe76f390dfa24b1194ff821d4e86c17d41cb5562f3a276a8bcbfc9d1d"},
-]
-
-[[package]]
 name = "pytz"
 version = "2025.2"
 description = "World timezone definitions, modern and historical"
@@ -1199,4 +1188,4 @@ test = ["pytest (>=8.1,<9.0)", "pytest-rerunfailures (>=14.0,<15.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.9.7 || >3.9.7,<3.13"
-content-hash = "4a00ae10880dd87b6c7e9ed43f2f80603c79719625737a08f143d0df011cc883"
+content-hash = "79db09899c281b0e6967393c82e3ba59013e0a8af67b34f114f93b2e1bd2d7c4"
